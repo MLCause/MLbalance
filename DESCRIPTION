@@ -1,0 +1,13 @@
+Package: MLbalance
+Type: Package
+Title: Machine Learning Balance Permutation Tests for Experiments
+Version: 0.1.
+Authors@R: c(person(c("Jack", "T."), "Rametta",email = "jtrametta@ucdavis.edu",
+                  role = c("aut", "cre")),
+             person("Sam", "Fuller", email = "sjfuller@ucdavis.edu",
+                  role = c("aut", "cre")))
+Author: Jack T. Rametta & Sam Fuller
+Description: This package implements a novel machine learning balance test, the balance permutation test, for experiments with binary, multiarm, and continuous treatments. The purpose of this test is to detect failures of random assignment and imbalance across treatment arms.  
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
