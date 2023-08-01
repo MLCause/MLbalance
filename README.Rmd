@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 # MLbalance (alpha version)
 
 <!-- badges: start -->
-![](use_lifecycle_badge("experimental"))
+[![Lifecycle: experimental](https://github.com/CetiAlphaFive/MLbalance/blob/master/man/figures/lifecycle-experimental.svg](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 <!-- badges: end -->
 
