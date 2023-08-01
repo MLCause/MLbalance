@@ -44,6 +44,12 @@ vip <- function(model){
 #' @param grf.seed Random seed used in grf's seed
 #' @param breaks number of breaks in output histogram
 #' @examples random_check(W_real = real_assignment,X = matrix_covs)
+#' @examples n <- 1000
+#' @examples p <- 20
+#' @examples X <- matrix(rnorm(n*p,0,1),n,p)
+#' @examples w_real <- rbinom(n, 1, ifelse(.021 + abs(.4*X[,4] - .5*X[,8]) < 1, .021 + abs(.4*X[,4] - .5*X[,8]), 1))
+#' @examples df <- data.frame(w_real,X)
+#' @examples r.check <- random_check(W_real = df$w_real, W_sim  = df$w_sim,X = subset(df,select = -w_real)); r.check
 #' @export
 random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995, breaks = 15){
 
