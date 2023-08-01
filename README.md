@@ -1,12 +1,6 @@
 
 # MLbalance (alpha version)
 
-<!-- badges: start -->
-
-![](use_lifecycle_badge(%22experimental%22))
-
-<!-- badges: end -->
-
 MLbalance implements a novel machine learning balance test, the balance
 permutation test, for experiments with binary, multiarm, and continuous
 treatments. The purpose of this test is to detect failures of random
@@ -47,6 +41,8 @@ treatment assignment.
 # install.packages("randomizr")
 library(MLbalance)
 #
+set.seed(1995)
+#
 # Simple simulation 
 n <- 1000
 p <- 20
@@ -69,16 +65,16 @@ r.check <- random_check(W_real = df$w_real, #real treatment assignment vector
 #> 
 #> W_real
 #>   0   1 
-#> 499 501 
+#> 520 480 
 #> W_sim
 #>   0   1 
-#> 499 501 
+#> 520 480 
 #> 
 #> 
 #> Result from difference in variances test (one-sided, greater F-test):
 #> 
 #>  Statistic p.val Result
-#>   153.9119     0   FAIL
+#>   139.8141     0   FAIL
 #> 
 #> 
 #> Check diff.var.result in saved output for detailed test result.

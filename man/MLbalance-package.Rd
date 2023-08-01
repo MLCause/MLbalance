@@ -8,6 +8,13 @@
 \description{
 This package implements a novel machine learning balance test, the balance permutation test, for experiments with binary, multiarm, and continuous treatments. The purpose of this test is to detect failures of random assignment and imbalance across treatment arms.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://cetialphafive.github.io/MLbalance/}
+}
+
+}
 \author{
 \strong{Maintainer}: Jack T. Rametta \email{jtrametta@ucdavis.edu}
 
