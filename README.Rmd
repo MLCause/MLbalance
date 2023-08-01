@@ -41,7 +41,7 @@ devtools::install_github("samjfuller/MLbalance)
 
 Here is a basic example demonstrating the balance permutation test on a simulated binary treatment DGP with multidimensional contamation of the treatment assignment.
 
-```{r}
+```{r example}
 # install.packages("randomizr")
 library(MLbalance)
 #

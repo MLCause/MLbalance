@@ -80,7 +80,7 @@ r.check <- random_check(W_real = df$w_real, #real treatment assignment vector
 #> Check diff.var.result in saved output for detailed test result.
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-example-1.png" width="100%" />
 
 ``` r
 # to see variables important for predicting assignment, check r.check$imp.predictors 
