@@ -11,9 +11,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-# MLbalance (alpha version)
+# MLbalance (alpha version) 
 
-![](https://github.com/CetiAlphaFive/MLbalance/blob/master/man/figures/mlbalance_sticker.png){width=11%}
+```{r, echo=FALSE, out.width="50%"}
+knitr::include_graphics("https://github.com/CetiAlphaFive/MLbalance/blob/master/man/figures/mlbalance_sticker.png")
+```
 
 MLbalance implements a novel machine learning balance test, the balance permutation test, for experiments with binary, multiarm, and continuous treatments. The purpose of this test is to detect failures of random assignment and imbalance across treatment arms. For more detail, see Rametta and Fuller (2023). This package is in alpha, any recommendations or comments welcome in the issues section.  
 
