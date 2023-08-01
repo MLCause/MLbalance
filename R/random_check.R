@@ -43,7 +43,6 @@ vip <- function(model){
 #' @param R.seed Random seed used in set.seed
 #' @param grf.seed Random seed used in grf's seed
 #' @param breaks number of breaks in output histogram
-#' @examples random_check(W_real = real_assignment,X = matrix_covs)
 #' @examples n <- 1000
 #' @examples p <- 20
 #' @examples X <- matrix(rnorm(n*p,0,1),n,p)

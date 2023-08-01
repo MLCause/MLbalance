@@ -28,7 +28,6 @@ random_check(
 Permutation Balance Test
 }
 \examples{
-random_check(W_real = real_assignment,X = matrix_covs)
 n <- 1000
 p <- 20
 X <- matrix(rnorm(n*p,0,1),n,p)
