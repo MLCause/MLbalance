@@ -22,26 +22,29 @@ if (!requireNamespace("ggdist", quietly = TRUE)) {
   )
 }
 #
+# This measure of variable importance is explained in the appendix, comes from grf. Function to arrange scores
+#
+#' Variable Importance Function
 #' @import grf
 #' @import ggdist
 #' @import ggplot2
 #' @param model Trained GRF Model Object
-# Variable Importance Function ####
-# This measure of variable importance is explained in the appendix, comes from grf. Function to arrange scores
+#' @examples vi(grf_model_object)
+#' @export
 vi <- function(model){
   vip_scores <- data.frame(varname = colnames(model$X.orig),vip = grf::variable_importance(model))
   vip_scores[order(vip_scores$vip, decreasing = T),]
 }
 #
-# Permutation Balance Test Main Function ####
+#' Permutation Balance Test
 #
 #' @param W_real Real Treatment Assignment Vector
 #' @param W_sim Simulated Treatment Assignment Vector
 #' @param R.seed Random seed used in set.seed
 #' @param grf.seed Random seed used in grf's seed
 #' @param breaks number of breaks in output histogram
+#' @examples random_check(W_real = real_assignment,X = matrix_covs)
 #' @export
-#
 random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995, breaks = 15){
 
   #Set the seed, default is 1995
