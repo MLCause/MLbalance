@@ -1,5 +1,31 @@
 # MAIN RANDOM CHECK FUNCTION FOR BINARY TREATMENTS ####
 #
+# Check dependencies
+if (!requireNamespace("grf", quietly = TRUE)) {
+  stop(
+    "Package \"grf\" must be installed to use MLbalance.",
+    call. = FALSE
+  )
+}
+#
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  stop(
+    "Package \"ggplot2\" must be installed to use MLbalance.",
+    call. = FALSE
+  )
+}
+#
+if (!requireNamespace("ggdist", quietly = TRUE)) {
+  stop(
+    "Package \"ggdist\" must be installed to use MLbalance.",
+    call. = FALSE
+  )
+}
+#
+#' @import grf
+#' @import ggdist
+#' @import ggplot2
+#
 # Variable Importance Function ####
 # This measure of variable importance is explained in the appendix, comes from grf. Function to arrange scores
 vi <- function(model){
