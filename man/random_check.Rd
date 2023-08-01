@@ -29,4 +29,10 @@ Permutation Balance Test
 }
 \examples{
 random_check(W_real = real_assignment,X = matrix_covs)
+n <- 1000
+p <- 20
+X <- matrix(rnorm(n*p,0,1),n,p)
+w_real <- rbinom(n, 1, ifelse(.021 + abs(.4*X[,4] - .5*X[,8]) < 1, .021 + abs(.4*X[,4] - .5*X[,8]), 1))
+df <- data.frame(w_real,X)
+r.check <- random_check(W_real = df$w_real, W_sim  = df$w_sim,X = subset(df,select = -w_real)); r.check
 }
