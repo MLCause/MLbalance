@@ -69,16 +69,16 @@ r.check <- random_check(W_real = df$w_real, #real treatment assignment vector
 #> 
 #> W_real
 #>   0   1 
-#> 505 495 
+#> 499 501 
 #> W_sim
 #>   0   1 
-#> 505 495 
+#> 499 501 
 #> 
 #> 
 #> Result from difference in variances test (one-sided, greater F-test):
 #> 
 #>  Statistic p.val Result
-#>   165.4342     0   FAIL
+#>   153.9119     0   FAIL
 #> 
 #> 
 #> Check diff.var.result in saved output for detailed test result.

@@ -50,6 +50,8 @@ Here is a basic example demonstrating the balance permutation test on a simulate
 # install.packages("randomizr")
 library(MLbalance)
 #
+set.seed(1995)
+#
 # Simple simulation 
 n <- 1000
 p <- 20
