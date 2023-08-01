@@ -29,9 +29,9 @@ if (!requireNamespace("ggdist", quietly = TRUE)) {
 #' @import ggdist
 #' @import ggplot2
 #' @param model Trained GRF Model Object
-#' @examples vi(grf_model_object)
+#' @examples vip(grf_model_object)
 #' @export
-vi <- function(model){
+vip <- function(model){
   vip_scores <- data.frame(varname = colnames(model$X.orig),vip = grf::variable_importance(model))
   vip_scores[order(vip_scores$vip, decreasing = T),]
 }
@@ -127,7 +127,7 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
   results <- list(
     "prop.model.real" = g.real,
     "treat.props" = g.real$predictions,
-    "imp.predictors" = vi(g.real$forests[[1]]),
+    "imp.predictors" = vip(g.real$forests[[1]]),
     "prop.model.sim" = g.sim,
     "treatment.props.sim" = g.sim$predictions,
     "plot.df" = plot.df,
