@@ -125,7 +125,7 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
     #ggtitle("Randomization Check: Real Treatment Propensities vs. Permuted Null Distribution") +
     scale_fill_manual(values = c("dodgerblue1","darkorange1")) +
     guides(fill=guide_legend(title="")) +
-    scale_x_continuous(limits = c(0, 1.01), expand = c(0, 0)) +
+    if(max(plot.df$val) > 1 | min(plot.df$val) < 0){scale_x_continuous(expand = c(0, 0))}else{scale_x_continuous(limits = c(0, 1.01), expand = c(0, 0))} +
     scale_y_continuous(limits = c(0, 1), expand = c(0, 0))
 
   #Create the results object list
