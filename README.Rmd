@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of MLbalance is to ...
+MLbalance implements a novel machine learning balance test, the balance permutation test, for experiments with binary, multiarm, and continuous treatments. The purpose of this test is to detect failures of random assignment and imbalance across treatment arms. For more detail, see Rametta and Fuller (2023).   
+
 
 ## Installation
 
@@ -27,29 +28,37 @@ You can install the development version of MLbalance from [GitHub](https://githu
 ``` r
 # install.packages("devtools")
 devtools::install_github("CetiAlphaFive/MLbalance")
+# OR 
+# install.packages("remotes)
+remotes::install_github("CetiAlphaFive/MLbalance")
+# OR 
+# install.packages("pak")
+pak::pak("CetiAlphaFive/MLbalance")
 ```
 
-## Example
+## Binary Treatment Example 
 
-This is a basic example which shows you how to solve a common problem:
+Here is a basic example demonstrating the balance permutation test on a simulated binary treatment DGP. 
 
-```{r example}
+```{r}
+# install.packages("randomizr")
 library(MLbalance)
-## basic example code
+#
+# Simple simulation 
+n <- 1000
+p <- 20
+X <- matrix(rnorm(n*p,0,1),n,p)
+w_real <- rbinom(n, 1, ifelse(.021 + abs(.4*X[,4] - .5*X[,8]) < 1, .021 + abs(.4*X[,4] - .5*X[,8]), 1))
+# install.packages("randomizr")
+w_sim <- randomizr::complete_ra(N = n,m = sum(w_real))
+e <- rnorm(n,0,1)
+y <- 2*w_real*X[,4] + 3*X[,2] -2*X[,8] + e
+df <- data.frame(y,w_real,w_sim,X)
+#
+r.check <- random_check(W_real = df$w_real, #real treatment assignment vector 
+                        W_sim  = df$w_sim, #simulated vector, comment out this argument to use permutated real assignment vector instead 
+                        X      = subset(df,select = -c(y,w_real,w_sim)) #matrix of pretreatment covariates (or any covariates that SHOULD NOT be related to the assignment process/mechanism
+             ); r.check$plot
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
