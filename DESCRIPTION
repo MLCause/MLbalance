@@ -9,6 +9,7 @@ Authors@R: c(person(c("Jack", "T."), "Rametta",email = "jtrametta@ucdavis.edu",
 Author: Jack T. Rametta & Sam Fuller
 Description: This package implements a novel machine learning balance test, the balance permutation test, for experiments with binary, multiarm, and continuous treatments. The purpose of this test is to detect failures of random assignment and imbalance across treatment arms.  
 License: GPL-3
+Depends: R (>= 4.1.0)
 Imports:
     grf,
     ggdist,
