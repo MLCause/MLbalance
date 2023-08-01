@@ -1,21 +1,23 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# MLbalance
+# MLbalance (alpha version)
 
 <!-- badges: start -->
+
+use_lifecycle_badge(“experimental”)
+
 <!-- badges: end -->
 
 MLbalance implements a novel machine learning balance test, the balance
 permutation test, for experiments with binary, multiarm, and continuous
 treatments. The purpose of this test is to detect failures of random
 assignment and imbalance across treatment arms. For more detail, see
-Rametta and Fuller (2023).
+Rametta and Fuller (2023). This package is in alpha, any recommendations
+or comments welcome in the issues section.
 
 ## Installation
 
 You can install the development version of MLbalance from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/CetiAlphaFive/MLbalance) with:
 
 ``` r
 # install.packages("devtools")
@@ -28,19 +30,22 @@ remotes::install_github("CetiAlphaFive/MLbalance")
 pak::pak("CetiAlphaFive/MLbalance")
 ```
 
+Future stable versions will be available on CRAN and also on Github
+here:
+
+``` r
+devtools::install_github("samjfuller/MLbalance)
+```
+
 ## Binary Treatment Example
 
 Here is a basic example demonstrating the balance permutation test on a
-simulated binary treatment DGP.
+simulated binary treatment DGP with multidimensional contamation of the
+treatment assignment.
 
 ``` r
 # install.packages("randomizr")
 library(MLbalance)
-#> 
-#> Attaching package: 'MLbalance'
-#> The following object is masked from 'package:utils':
-#> 
-#>     vi
 #
 # Simple simulation 
 n <- 1000
@@ -64,19 +69,23 @@ r.check <- random_check(W_real = df$w_real, #real treatment assignment vector
 #> 
 #> W_real
 #>   0   1 
-#> 515 485 
+#> 532 468 
 #> W_sim
 #>   0   1 
-#> 515 485 
+#> 532 468 
 #> 
 #> 
 #> Result from difference in variances test (one-sided, greater F-test):
 #> 
 #>  Statistic p.val Result
-#>   61.13291     0   FAIL
+#>   289.1579     0   FAIL
 #> 
 #> 
 #> Check diff.var.result in saved output for detailed test result.
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
+``` r
+# to see variables important for predicting assignment, check r.check$imp.predictors 
+```

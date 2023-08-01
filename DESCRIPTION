@@ -1,6 +1,6 @@
 Package: MLbalance
 Type: Package
-Title: Machine Learning Balance Permutation Tests for Experiments
+Title: Machine Learning Balance Permutation Tests for Experimental Data
 Version: 0.1
 Authors@R: c(person(c("Jack", "T."), "Rametta",email = "jtrametta@ucdavis.edu",
                   role = c("aut", "cre")),
