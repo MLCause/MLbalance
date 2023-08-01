@@ -1,6 +1,13 @@
 
 # MLbalance (alpha version)
 
+<figure>
+<img
+src="https://github.com/CetiAlphaFive/MLbalance/blob/master/man/figures/mlbalance_sticker.png"
+alt="sticker" />
+<figcaption aria-hidden="true">sticker</figcaption>
+</figure>
+
 MLbalance implements a novel machine learning balance test, the balance
 permutation test, for experiments with binary, multiarm, and continuous
 treatments. The purpose of this test is to detect failures of random
