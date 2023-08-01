@@ -30,7 +30,7 @@ if (!requireNamespace("ggdist", quietly = TRUE)) {
 #' @import ggplot2
 #' @param model Trained GRF Model Object
 #' @examples vi(grf_model_object)
-#' @export
+#'
 vi <- function(model){
   vip_scores <- data.frame(varname = colnames(model$X.orig),vip = grf::variable_importance(model))
   vip_scores[order(vip_scores$vip, decreasing = T),]
