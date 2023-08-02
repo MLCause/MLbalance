@@ -43,6 +43,7 @@ vip <- function(model){
 #' @param R.seed Random seed used in set.seed
 #' @param grf.seed Random seed used in grf's seed
 #' @param breaks number of breaks in output histogram
+#' @param facet facet by treatment assignment,default is FALSE
 #' @examples n <- 1000
 #' @examples p <- 20
 #' @examples X <- matrix(rnorm(n*p,0,1),n,p)
@@ -50,20 +51,19 @@ vip <- function(model){
 #' @examples df <- data.frame(w_real,X)
 #' @examples r.check <- random_check(W_real = df$w_real, W_sim  = df$w_sim,X = subset(df,select = -w_real)); r.check
 #' @export
-random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995, breaks = 15){
+random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995, breaks = 15,facet = FALSE){
 
   #Set the seed, default is 1995
   set.seed(R.seed)
 
   #Print message if permutation selected
   if(is.null(W_sim) == TRUE){
-    cat("No Simulated Assignemnt Vector Provided, Null Distribution Generated Using Permutated Treatment Assignment.\n\n\n")} else {
-      cat("Simulated Assignemnt Vector Provided, Null Distribution Generated Using Simulated Treatment Assignment.\n\n\n")
+    cat("No Simulated Assignment Vector Provided, Null Distribution Generated Using Permutated Treatment Assignment.\n\n\n")} else {
+      cat("Simulated Assignment Vector Provided, Null Distribution Generated Using Simulated Treatment Assignment.\n\n\n")
     }
 
   #Print simple count table(s)
-  cat("Simple Count Table(s)\n\n")
-  if(is.null(W_sim) == TRUE){print(table(W_real))} else {print(table(W_real)) & print(table(W_sim))}
+  if(length(unique(W_real)) <= 2 & !is.null(W_sim)){cat("Simple Count Table(s)\n\n"); print(table(W_real)); print(table(W_sim))}
 
   #Check inputs for correct formats
   if(is.vector(W_real) != TRUE)
@@ -89,6 +89,7 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
 
   # Build a data frame for the diagnostics plot
   plot.df <- data.frame(var = factor(c(rep("Real",NROW(g.real$predictions)),rep("Null",NROW(g.sim$predictions)))),
+                        treat = c(W_real, W_sim),
                         val = c(g.real$predictions,g.sim$predictions))
 
   #ggplot theme, no package required
@@ -104,7 +105,9 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
           plot.caption = element_text(hjust = 0),
           text=element_text(size=12,  family="serif"),
           legend.position = c(.1,.75),
-          axis.ticks = element_blank())
+          axis.ticks = element_blank(),
+          legend.background=element_blank(),
+          panel.spacing = unit(2, "lines"))
   }
 
   #Create the overlapping histogram ggplot2
@@ -125,15 +128,20 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
     #ggtitle("Randomization Check: Real Treatment Propensities vs. Permuted Null Distribution") +
     scale_fill_manual(values = c("dodgerblue1","darkorange1")) +
     guides(fill=guide_legend(title="")) +
-    if(max(plot.df$val) > 1 | min(plot.df$val) < 0){scale_x_continuous(expand = c(0, 0))}else{scale_x_continuous(limits = c(0, 1.01), expand = c(0, 0))} +
-    scale_y_continuous(limits = c(0, 1), expand = c(0, 0))
+    scale_y_continuous(limits = c(0, 1), expand = c(0, 0)) +
+    if(max(plot.df$val) > 1 | min(plot.df$val) < 0){scale_x_continuous(expand = c(0, 0))}else{scale_x_continuous(limits = c(0, 1.01), expand = c(0, 0))}
+
+  g <- g +
+    if(facet == TRUE){facet_wrap(~treat)}
 
   #Create the results object list
   results <- list(
     "prop.model.real" = g.real,
+    "prop.model.real.tuning" = g.real$forests[[1]]$tunable.params,
     "treat.props" = g.real$predictions,
     "imp.predictors" = vip(g.real$forests[[1]]),
     "prop.model.sim" = g.sim,
+    "prop.model.real.tuning" = g.sim$forests[[1]]$tunable.params,
     "treatment.props.sim" = g.sim$predictions,
     "plot.df" = plot.df,
     "diff.var.result" = f.res,
