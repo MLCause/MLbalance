@@ -10,7 +10,8 @@ random_check(
   X,
   R.seed = 1995,
   grf.seed = 1995,
-  breaks = 15
+  breaks = 15,
+  facet = FALSE
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ random_check(
 \item{grf.seed}{Random seed used in grf's seed}
 
 \item{breaks}{number of breaks in output histogram}
+
+\item{facet}{facet by treatment assignment,default is FALSE}
 }
 \description{
 Permutation Balance Test
