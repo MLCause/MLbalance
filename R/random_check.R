@@ -148,10 +148,11 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
     "plot" = g)
 
   # Add marker for detection of extreme treatment propensities
-  results$extreme.props <- ifelse(results$treat.props > .9 | results$treat.props < .1,
-
-                                  cat("\n\nWarning: Extreme Propensity scores detected (greater than .9 or less than .1). Examine $treat.props for more detail. \n\n"),
-                                  cat("\n\nNo Extreme Propensity scores detected (greater than .9 or less than .1). \n\n"))
+  results$extreme.props <- if(results$treat.props > .9 | results$treat.props < .1){
+                                  cat("\n\nWarning: Extreme Propensity scores detected (greater than .9 or less than .1).
+                                      Examine $treat.props for more detail. \n\n")} else {
+                                  cat("\n\nNo Extreme Propensity scores detected (greater than .9 or less than .1). \n\n")
+}
 
   #Print table with summarized results
   cat("\n\nResult from difference in variances test (one-sided, greater F-test):\n\n")
