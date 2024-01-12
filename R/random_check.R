@@ -82,7 +82,7 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
   g.real  <- grf::boosted_regression_forest(X = X, Y = W_real, honesty = T, tune.parameters = "all", seed = grf.seed)
 
   # Build a treatment propensity model with the simulated treatment assignment vector. Lock tuning parameters to real model.
-  g.sim   <- grf::boosted_regression_forest(X = X, Y = W_sim, honesty = T, seed = grf.seed
+  g.sim   <- grf::boosted_regression_forest(X = X, Y = W_sim, honesty = T, seed = grf.seed,
                                             sample.fraction      = g.real$forests[[1]]$tunable.params$sample.fraction,
                                             mtry                 = g.real$forests[[1]]$tunable.params$mtry,
                                             min.node.size        = g.real$forests[[1]]$tunable.params$min.node.size,
