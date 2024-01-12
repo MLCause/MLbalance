@@ -148,7 +148,6 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
     "prop.model.real.tuning" = g.sim$forests[[1]]$tunable.params,
     "treatment.props.sim" = g.sim$predictions,
     "plot.df" = plot.df,
-    "diff.var.result" = f.res,
     "plot" = g)
 
   #Print plot with results
