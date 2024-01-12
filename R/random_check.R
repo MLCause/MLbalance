@@ -158,3 +158,4 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
   return(results)
 }
 #
+
