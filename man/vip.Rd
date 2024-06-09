@@ -13,5 +13,8 @@ vip(model)
 Variable Importance Function
 }
 \examples{
+x <- data.frame(X1 = rnorm(1000))
+y <- rnorm(1000)
+model <- grf::regression_forest(X = x,Y = y)
 vip(model)
 }

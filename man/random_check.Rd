@@ -19,6 +19,8 @@ random_check(
 
 \item{W_sim}{Simulated Treatment Assignment Vector}
 
+\item{X}{Pre-treatment covariate matrix or data frame}
+
 \item{R.seed}{Random seed used in set.seed}
 
 \item{grf.seed}{Random seed used in grf's seed}
@@ -34,7 +36,10 @@ Permutation Balance Test
 n <- 1000
 p <- 20
 X <- matrix(rnorm(n*p,0,1),n,p)
-w_real <- rbinom(n, 1, ifelse(.021 + abs(.4*X[,4] - .5*X[,8]) < 1, .021 + abs(.4*X[,4] - .5*X[,8]), 1))
+w_real <- rbinom(n, 1, ifelse(.021 + abs(.4*X[,4] - .5*X[,8]) < 1,
+                 .021 + abs(.4*X[,4] - .5*X[,8]), 1))
 df <- data.frame(w_real,X)
-r.check <- random_check(W_real = df$w_real, W_sim  = df$w_sim,X = subset(df,select = -w_real)); r.check
+r.check <- random_check(W_real = df$w_real,
+                        W_sim  = df$w_sim,
+                        X = subset(df,select = -w_real)); r.check$plot
 }

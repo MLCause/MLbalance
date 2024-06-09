@@ -29,7 +29,7 @@ if (!requireNamespace("ggdist", quietly = TRUE)) {
 #' @import ggdist
 #' @import ggplot2
 #' @param model Trained GRF Model Object
-#' @examples x <- rnorm(1000)
+#' @examples x <- data.frame(X1 = rnorm(1000))
 #' @examples y <- rnorm(1000)
 #' @examples model <- grf::regression_forest(X = x,Y = y)
 #' @examples vip(model)
@@ -43,16 +43,20 @@ vip <- function(model){
 #
 #' @param W_real Real Treatment Assignment Vector
 #' @param W_sim Simulated Treatment Assignment Vector
+#' @param X Pre-treatment covariate matrix or data frame
 #' @param R.seed Random seed used in set.seed
 #' @param grf.seed Random seed used in grf's seed
 #' @param breaks number of breaks in output histogram
 #' @param facet facet by treatment assignment,default is FALSE
-#' @examples n <- 1000
-#' @examples p <- 20
-#' @examples X <- matrix(rnorm(n*p,0,1),n,p)
-#' @examples w_real <- rbinom(n, 1, ifelse(.021 + abs(.4*X[,4] - .5*X[,8]) < 1, .021 + abs(.4*X[,4] - .5*X[,8]), 1))
+#' @examples n <- 1000 #sample size
+#' @examples p <- 20 #number of pre-treatment covariates
+#' @examples X <- matrix(rnorm(n*p,0,1),n,p) #simulating pre-treatment covariates
+#' @examples w_real <- rbinom(n, 1, ifelse(.021 + abs(.4*X[,4] - .5*X[,8]) < 1,
+#' @examples                  .021 + abs(.4*X[,4] - .5*X[,8]), 1)) #simulating contaminated assignment
 #' @examples df <- data.frame(w_real,X)
-#' @examples r.check <- random_check(W_real = df$w_real, W_sim  = df$w_sim,X = subset(df,select = -w_real)); r.check
+#' @examples r.check <- random_check(W_real = df$w_real, #real treatment assignment
+#' @examples                         W_sim  = df$w_sim, #simulated treatment assignment, unhash for permuted version
+#' @examples                         X = subset(df,select = -w_real)); r.check$plot
 #' @export
 random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995, breaks = 15,facet = FALSE){
 
@@ -86,9 +90,6 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
 
   # Build a treatment propensity model with the simulated treatment assignment vector. Boosted reg forest from grf.
   g.sim   <- grf::boosted_regression_forest(X = X, Y = W_sim,  honesty = T, tune.parameters = "all", seed = grf.seed)
-
-  # Simple one-sided, two-sample F-test results between the binary treatments
-  f.res <- var.test(x = g.real$predictions, y = g.sim$predictions, alternative = "greater")
 
   # Build a data frame for the diagnostics plot
   plot.df <- data.frame(var = factor(c(rep("Real",NROW(g.real$predictions)),rep("Null",NROW(g.sim$predictions)))),
@@ -141,24 +142,13 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
   results <- list(
     "prop.model.real" = g.real,
     "prop.model.real.tuning" = g.real$forests[[1]]$tunable.params,
-    "treat.props" = g.real$predictions,
+    "treat.props.real" = g.real$predictions,
     "imp.predictors" = vip(g.real$forests[[1]]),
     "prop.model.sim" = g.sim,
     "prop.model.real.tuning" = g.sim$forests[[1]]$tunable.params,
-    "treatment.props.sim" = g.sim$predictions,
+    "treat.props.sim" = g.sim$predictions,
     "plot.df" = plot.df,
-    "diff.var.result" = f.res,
     "plot" = g)
-
-  #Print table with summarized results
-  cat("\n\nResult from difference in variances test (one-sided, greater F-test):\n\n")
-
-  data <- data.frame(Statistic = f.res$statistic,
-                     p.val = f.res$p.value,
-                     Result = ifelse(f.res$p.value <.05,"FAIL","PASS"))
-  print(data,row.names = FALSE)
-
-  cat("\n\nCheck diff.var.result in saved output for detailed test result.\n\n")
 
   #return the results
   return(results)
