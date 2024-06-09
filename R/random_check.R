@@ -29,7 +29,7 @@ if (!requireNamespace("ggdist", quietly = TRUE)) {
 #' @import ggdist
 #' @import ggplot2
 #' @param model Trained GRF Model Object
-#' @examples vip(grf_model_object)
+#' @examples vip(model)
 #' @export
 vip <- function(model){
   vip_scores <- data.frame(varname = colnames(model$X.orig),vip = grf::variable_importance(model))
