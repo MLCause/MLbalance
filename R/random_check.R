@@ -29,6 +29,9 @@ if (!requireNamespace("ggdist", quietly = TRUE)) {
 #' @import ggdist
 #' @import ggplot2
 #' @param model Trained GRF Model Object
+#' @examples x <- rnorm(1000)
+#' @examples y <- rnorm(1000)
+#' @examples model <- grf::regression_forest(X = x,Y = y)
 #' @examples vip(model)
 #' @export
 vip <- function(model){

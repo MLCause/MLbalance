@@ -13,5 +13,5 @@ vip(model)
 Variable Importance Function
 }
 \examples{
-vip(grf_model_object)
+vip(model)
 }
