@@ -29,6 +29,9 @@ if (!requireNamespace("ggdist", quietly = TRUE)) {
 #' @import ggdist
 #' @import ggplot2
 #' @param model Trained GRF Model Object
+#' @description
+#' This convenience function takes a trained grf model object and returns a data frame of variable importance scores using grf's simple variable importance metric.
+#'
 #' @examples x <- data.frame(X1 = rnorm(1000))
 #' @examples y <- rnorm(1000)
 #' @examples model <- grf::regression_forest(X = x,Y = y)
@@ -39,15 +42,21 @@ vip <- function(model){
   vip_scores[order(vip_scores$vip, decreasing = T),]
 }
 #
-#' Permutation Balance Test
+#' Balance Permutation Test
 #
-#' @param W_real Real Treatment Assignment Vector
-#' @param W_sim Simulated Treatment Assignment Vector
-#' @param X Pre-treatment covariate matrix or data frame
-#' @param R.seed Random seed used in set.seed
-#' @param grf.seed Random seed used in grf's seed
-#' @param breaks number of breaks in output histogram
-#' @param facet facet by treatment assignment,default is FALSE
+#' @param W_real Real treatment assignment vector.
+#' @param W_sim Simulated treatment assignment vector. If not provided, permuted W_real is used.
+#' @param X Pre-treatment covariate matrix or data frame.
+#' @param R.seed Random seed used in set.seed (for replicability).
+#' @param grf.seed Random seed used in grf's seed (for replicability).
+#' @param breaks number of breaks in output histogram. Default is 15.
+#' @param facet facet by treatment assignment. Default is FALSE.
+#' @description
+#' This is the main balance permutation test function. First, the function attempts to model treatment assignment (W_real) as a function of pre-treatment covariates (X). It does so using an honest, boosted random forest (see Ghosal and Hooker 2018) with built-in hyperparameter tuning. This model is used to generate real treatment propensity scores. Then, we build a second boosted random forest model using the same pre-treatment covariates and tuning parameter settings but with either simulated, or randomly permuted, treatment assignment as the outcome variable. The function proceeds to output both the real and null treatment propensity scores as well as diagnostics and a plot comparing the distributions.
+#'
+#' The purpose of this exercise is to compare the real treatment propensity distribution to a null distribution where treatment assignment is correctly orthogonal to pre-treatment covariates. To interpret the results, it's advisable to notice any extreme, deterministic treatment propensity scores near zero or one, or any other divergences from design expectations. In general, if randomization succeeded the two distributions should closely overlap with similar means and variances. If the results are at all unclear, it's advisable to estimate average treatment effects via a method that accounts for propensity to treatment (e.g., augmented inverse propensity weighting, overlap weighting, etc.).
+#'
+#'
 #' @examples n <- 1000 #sample size
 #' @examples p <- 20 #number of pre-treatment covariates
 #' @examples X <- matrix(rnorm(n*p,0,1),n,p) #simulating pre-treatment covariates

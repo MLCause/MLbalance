@@ -4,14 +4,14 @@
 \name{MLbalance-package}
 \alias{MLbalance}
 \alias{MLbalance-package}
-\title{MLbalance: Machine Learning Balance Permutation Tests for Experimental Data}
+\title{MLbalance: Balance Permutation Test}
 \description{
-This package implements a novel machine learning balance test, the balance permutation test, for experiments with binary, multiarm, and continuous treatments. The purpose of this test is to detect failures of random assignment and imbalance across treatment arms.
+This package implements a novel machine learning balance test, the balance permutation test, for experimental data. The purpose of this test is to detect unintentional failures of random assignment, data fabrication, or simple covariate imbalance. Our implemenation employs honest, boosted random forests with native parallel processing, hyperparameter tuning, and the ability to handle missingness in pre-treatment covariates.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/samjfuller/MLbalance}
+  \item \url{https://github.com/CetiAlphaFive/MLbalance}
 }
 
 }

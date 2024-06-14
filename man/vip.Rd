@@ -10,7 +10,7 @@ vip(model)
 \item{model}{Trained GRF Model Object}
 }
 \description{
-Variable Importance Function
+This convenience function takes a trained grf model object and returns a data frame of variable importance scores using grf's simple variable importance metric.
 }
 \examples{
 x <- data.frame(X1 = rnorm(1000))

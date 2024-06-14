@@ -2,7 +2,7 @@
 % Please edit documentation in R/random_check.R
 \name{random_check}
 \alias{random_check}
-\title{Permutation Balance Test}
+\title{Balance Permutation Test}
 \usage{
 random_check(
   W_real,
@@ -15,31 +15,33 @@ random_check(
 )
 }
 \arguments{
-\item{W_real}{Real Treatment Assignment Vector}
+\item{W_real}{Real treatment assignment vector.}
 
-\item{W_sim}{Simulated Treatment Assignment Vector}
+\item{W_sim}{Simulated treatment assignment vector. If not provided, permuted W_real is used.}
 
-\item{X}{Pre-treatment covariate matrix or data frame}
+\item{X}{Pre-treatment covariate matrix or data frame.}
 
-\item{R.seed}{Random seed used in set.seed}
+\item{R.seed}{Random seed used in set.seed (for replicability).}
 
-\item{grf.seed}{Random seed used in grf's seed}
+\item{grf.seed}{Random seed used in grf's seed (for replicability).}
 
-\item{breaks}{number of breaks in output histogram}
+\item{breaks}{number of breaks in output histogram. Default is 15.}
 
-\item{facet}{facet by treatment assignment,default is FALSE}
+\item{facet}{facet by treatment assignment. Default is FALSE.}
 }
 \description{
-Permutation Balance Test
+This is the main balance permutation test function. First, the function attempts to model treatment assignment (W_real) as a function of pre-treatment covariates (X). It does so using an honest, boosted random forest (see Ghosal and Hooker 2018) with built-in hyperparameter tuning. This model is used to generate real treatment propensity scores. Then, we build a second boosted random forest model using the same pre-treatment covariates and tuning parameter settings but with either simulated, or randomly permuted, treatment assignment as the outcome variable. The function proceeds to output both the real and null treatment propensity scores as well as diagnostics and a plot comparing the distributions.
+
+The purpose of this exercise is to compare the real treatment propensity distribution to a null distribution where treatment assignment is correctly orthogonal to pre-treatment covariates. To interpret the results, it's advisable to notice any extreme, deterministic treatment propensity scores near zero or one, or any other divergences from design expectations. In general, if randomization succeeded the two distributions should closely overlap with similar means and variances. If the results are at all unclear, it's advisable to estimate average treatment effects via a method that accounts for propensity to treatment (e.g., augmented inverse propensity weighting, overlap weighting, etc.).
 }
 \examples{
-n <- 1000
-p <- 20
-X <- matrix(rnorm(n*p,0,1),n,p)
+n <- 1000 #sample size
+p <- 20 #number of pre-treatment covariates
+X <- matrix(rnorm(n*p,0,1),n,p) #simulating pre-treatment covariates
 w_real <- rbinom(n, 1, ifelse(.021 + abs(.4*X[,4] - .5*X[,8]) < 1,
-                 .021 + abs(.4*X[,4] - .5*X[,8]), 1))
+                 .021 + abs(.4*X[,4] - .5*X[,8]), 1)) #simulating contaminated assignment
 df <- data.frame(w_real,X)
-r.check <- random_check(W_real = df$w_real,
-                        W_sim  = df$w_sim,
+r.check <- random_check(W_real = df$w_real, #real treatment assignment
+                        W_sim  = df$w_sim, #simulated treatment assignment, unhash for permuted version
                         X = subset(df,select = -w_real)); r.check$plot
 }
