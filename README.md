@@ -5,7 +5,7 @@ MLbalance implements a novel machine learning balance test, the balance
 permutation test, for experiments with binary, multiarm, and continuous
 treatments. The purpose of this test is to detect failures of random
 assignment, data fabrication, or imbalance across treatment arms. For more detail, see
-Rametta and Fuller (2024).
+[Rametta and Fuller (2024)](https://osf.io/preprints/osf/xcwt9).
 
 This package is in development, any recommendations or comments welcome in the
 issues section.
