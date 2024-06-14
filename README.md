@@ -1,13 +1,13 @@
 
-# MLbalance (alpha version) <a href='https://github.com/samjfuller/MLbalance/blob/master/man/figures/mlbalance_sticker.png'><img src='man/figures/mlbalance_sticker.png' align="right" height="139" /></a>
+# MLbalance <a href='https://github.com/samjfuller/MLbalance/blob/master/man/figures/mlbalance_sticker.png'><img src='man/figures/mlbalance_sticker.png' align="right" height="139" /></a>
 
 MLbalance implements a novel machine learning balance test, the balance
 permutation test, for experiments with binary, multiarm, and continuous
 treatments. The purpose of this test is to detect failures of random
-assignment or imbalance across treatment arms. For more detail, see
+assignment, data fabrication, or imbalance across treatment arms. For more detail, see
 Rametta and Fuller (2024).
 
-This package is in alpha, any recommendations or comments welcome in the
+This package is in development, any recommendations or comments welcome in the
 issues section.
 
 ## Installation
