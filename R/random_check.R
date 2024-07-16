@@ -74,7 +74,7 @@ random_check <- function(W_real, W_sim = NULL, X,R.seed = 1995, grf.seed = 1995,
 
   #Print message if permutation selected
   if(is.null(W_sim) == TRUE){
-    cat("No Simulated Assignment Vector Provided, Null Distribution Generated Using Permutated Treatment Assignment.\n\n\n")} else {
+    cat("No Simulated Assignment Vector Provided, Null Distribution Generated Using Permuted Treatment Assignment.\n\n\n")} else {
       cat("Simulated Assignment Vector Provided, Null Distribution Generated Using Simulated Treatment Assignment.\n\n\n")
     }
 
